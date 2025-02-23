@@ -11,9 +11,6 @@
 #include <LCD_ST7032.h> // https://github.com/olkal/LCD_ST7032
 
 #define LED_PIN PC13
-// SDA PB9
-// SCL PB8
-
 #define DATA_PIN PB7 // JJY receiver
 // SEL_PIN
 // PON_PIN
@@ -36,6 +33,7 @@ void isr_routine() { // pin change interrupt service routine
 void setup() {
   // Serial.begin(115200);
 
+  // i2c LCD
   Wire.setSDA(PB9);
   Wire.setSCL(PB8);
   Wire.begin();
@@ -53,7 +51,7 @@ void setup() {
   // Instantiate HardwareTimer object. Thanks to 'new' instanciation, HardwareTimer is not destructed when setup() function is finished.
   HardwareTimer *MyTim = new HardwareTimer(Instance);
 
-  MyTim->setOverflow(99, HERTZ_FORMAT); // 100 Hz = 10ms
+  MyTim->setOverflow(100, HERTZ_FORMAT); // 100 Hz = 10ms
   MyTim->attachInterrupt(handle_timer);
   MyTim->resume();
   
